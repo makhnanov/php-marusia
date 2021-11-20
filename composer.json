@@ -1,0 +1,13 @@
+{
+    "name": "makhnanov/php-marusia",
+    "description": "OOP wrapper for handle marusia vk request.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Makhnanov\\PhpMarusia\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
