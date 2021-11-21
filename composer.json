@@ -5,9 +5,11 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Makhnanov\\PhpMarusia\\": "src/"
+            "Makhnanov\\PhpMarusia\\": "Src/"
         }
     },
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "psr/log": "3.x-dev"
+    }
 }
