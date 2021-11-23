@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Makhnanov\PhpMarusia;
 
-class MarusiaTools
+class Tools
 {
     public static function setResponseHeaderAllowCors()
     {
@@ -15,5 +17,10 @@ class MarusiaTools
         ob_start();
         var_dump($var);
         return ob_get_clean() ?: 'Output buffering is not active.';
+    }
+
+    public static function receiveData(): string|false
+    {
+        return file_get_contents('php://input');
     }
 }

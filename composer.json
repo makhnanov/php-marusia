@@ -1,6 +1,6 @@
 {
     "name": "makhnanov/php-marusia",
-    "description": "OOP wrapper for handle marusia vk request.",
+    "description": "OOP Marusia wrapper for handle marusia vk request.",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -10,6 +10,10 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "psr/log": "3.x-dev"
+        "psr/log": "3.x-dev",
+        "monolog/monolog": "2.x-dev"
+    },
+    "require-dehhv": {
+        "phpunit/phpunit": "^9.5"
     }
 }

@@ -1,0 +1,39 @@
+{
+    "meta": {
+        "client_id": "MailRu-VC/1.0",
+        "locale": "ru_RU",
+        "timezone": "Asia/Tomsk",
+        "interfaces": {},
+        "_city_ru": "Томск"
+    },
+    "request": {
+        "command": "эй привет чувак",
+        "original_utterance": "Эй привет чувак",
+        "type": "SimpleUtterance",
+        "nlu": {
+            "tokens": [
+                "эй",
+                "привет",
+                "чувак"
+            ],
+            "entities": []
+        }
+    },
+    "session": {
+        "session_id": "5446958f-9157-43c0-8526-00b1375359af",
+        "user_id": "40844c478ae065472980bba7a7b28dbeff98bbf6f4723aab2eebbc58a53a482f",
+        "skill_id": "52401ef1-935a-49ef-bd57-1f3f83ac3447",
+        "new": false,
+        "message_id": 16,
+        "application": {
+            "application_id": "40844c478ae065472980bba7a7b28dbeff98bbf6f4723aab2eebbc58a53a482f",
+            "application_type": "mail"
+        },
+        "auth_token": "636d5f7d6fb18e1aff48bb161ab82de12012fec213a0bf2e9a9efd8b7825c69c"
+    },
+    "state": {
+        "session": {},
+        "user": {}
+    },
+    "version": "1.0"
+}
