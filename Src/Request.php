@@ -49,7 +49,16 @@ class Request
      * @throws BadRequest
      * @throws InvalidAuthId
      */
-    public function __construct(string $data, null|string $authToken = null, bool $validateAuthToken = true)
+    public static function handle(string $data, null|string $authToken = null, bool $validateAuthToken = true)
+    {
+        return new self(...func_get_args());
+    }
+
+    /**
+     * @throws BadRequest
+     * @throws InvalidAuthId
+     */
+    protected function __construct(string $data, null|string $authToken = null, bool $validateAuthToken = true)
     {
         try {
             $dataObject = json_decode($data);

@@ -14,8 +14,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 try {
     Tools::setResponseHeaderAllowCors();
 
-    $request = new Request(
+    $request = Request::handle(
         Tools::receiveData() ?: throw new BadRequest('Data is empty.'),
+        null,
+        false
     );
 
     Response::create()
