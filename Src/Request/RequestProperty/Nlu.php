@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Makhnanov\PhpMarusia\Request\RequestProperty;
 
 use Makhnanov\PhpMarusia\Exception\BadRequest;
+use Makhnanov\PhpSelfFilling\SelfFillableConstruct;
 use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
  * @description Объект, содержащий слова и именованные сущности,
  * которые Маруся извлекла из запроса пользователя, в поле tokens (array) .
  */
-final class Nlu
+final class Nlu implements SelfFillableConstruct
 {
     use SelfFilling;
 

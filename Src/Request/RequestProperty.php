@@ -4,6 +4,7 @@ namespace Makhnanov\PhpMarusia\Request;
 
 use Makhnanov\PhpMarusia\Exception\BadRequest;
 use Makhnanov\PhpMarusia\Request\RequestProperty\Nlu;
+use Makhnanov\PhpSelfFilling\SelfFillableConstruct;
 use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
@@ -15,7 +16,7 @@ use Makhnanov\PhpSelfFilling\SelfFilling;
  * @method null|string getPayload()
  * @method Nlu getNlu()
  */
-final class RequestProperty
+final class RequestProperty implements SelfFillableConstruct
 {
     use SelfFilling;
 

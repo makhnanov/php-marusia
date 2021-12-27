@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Makhnanov\PhpMarusia\Request\Session;
 
+use Makhnanov\PhpSelfFilling\SelfFillableConstruct;
 use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
@@ -11,7 +12,7 @@ use Makhnanov\PhpSelfFilling\SelfFilling;
  *
  * @method string getUserId()
  */
-final class User
+final class User implements SelfFillableConstruct
 {
     use SelfFilling;
 

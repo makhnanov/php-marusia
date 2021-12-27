@@ -3,12 +3,13 @@
 namespace Makhnanov\PhpMarusia\Request\Session;
 
 use Makhnanov\PhpMarusia\Exception\BadRequest;
+use Makhnanov\PhpSelfFilling\SelfFillableConstruct;
 use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
  * @description Данные об экземляре приложения
  */
-final class Application
+final class Application implements SelfFillableConstruct
 {
     use SelfFilling;
 

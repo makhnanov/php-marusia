@@ -2,12 +2,13 @@
 
 namespace Makhnanov\PhpMarusia\Request;
 
+use Makhnanov\PhpSelfFilling\SelfFillableConstruct;
 use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
  * @description Информация об устройстве, с помощью которого пользователь общается с Марусей.
  */
-final class Meta
+final class Meta implements SelfFillableConstruct
 {
     use SelfFilling;
 
