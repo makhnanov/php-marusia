@@ -10,6 +10,7 @@
     },
     "minimum-stability": "dev",
     "require": {
+        "php": "^8.1",
         "psr/log": "3.x-dev",
         "monolog/monolog": "2.x-dev",
         "makhnanov/php-self-filling": "dev-main"
