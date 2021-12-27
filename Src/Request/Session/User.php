@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Makhnanov\PhpMarusia\Request\Session;
 
-use Makhnanov\PhpMarusia\Exception\BadRequest;
-use Makhnanov\PhpMarusia\Exception\ProbablyBadRequest;
-use Makhnanov\PhpMarusia\Getter;
-use stdClass;
+use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
  * @description Данные о пользователе. Передаётся, только если пользователь
@@ -16,16 +13,13 @@ use stdClass;
  */
 final class User
 {
-    use ProbablyBadRequest, Getter;
+    use SelfFilling;
 
-    private string $userId;
+    public readonly string $userId;
 
-    /**
-     * @throws BadRequest
-     */
-    public function __construct(stdClass $data)
+    public function __construct(array $data)
     {
-        /** @noinspection PhpStrictTypeCheckingInspection */
-        $this->userId = $data->user_id ?? $this->throwException('user_id');
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->selfFill($data, fromDataIdToPropertyCamel: true);
     }
 }

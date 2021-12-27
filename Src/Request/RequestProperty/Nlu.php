@@ -5,20 +5,15 @@ declare(strict_types=1);
 namespace Makhnanov\PhpMarusia\Request\RequestProperty;
 
 use Makhnanov\PhpMarusia\Exception\BadRequest;
-use Makhnanov\PhpMarusia\Exception\ProbablyBadRequest;
-use Makhnanov\PhpMarusia\Getter;
-use stdClass;
+use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
  * @description Объект, содержащий слова и именованные сущности,
  * которые Маруся извлекла из запроса пользователя, в поле tokens (array) .
- *
- * @method array getTokens()
- * @method array getEntities()
  */
-class Nlu
+final class Nlu
 {
-    use ProbablyBadRequest, Getter;
+    use SelfFilling;
 
     /**
      * @description Объект, содержащий слова и именованные сущности,
@@ -36,9 +31,8 @@ class Nlu
     /**
      * @throws BadRequest
      */
-    public function __construct(stdClass $data)
+    public function __construct(array $data)
     {
-        $this->tokens = $data->tokens ?? $this->throwException('tokens');
-        $this->entities = $data->entities ?? null;
+        $this->selfFill($data, fromDataIdToPropertyCamel: true);
     }
 }

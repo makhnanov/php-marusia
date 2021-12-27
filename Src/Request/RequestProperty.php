@@ -3,10 +3,8 @@
 namespace Makhnanov\PhpMarusia\Request;
 
 use Makhnanov\PhpMarusia\Exception\BadRequest;
-use Makhnanov\PhpMarusia\Exception\ProbablyBadRequest;
-use Makhnanov\PhpMarusia\Getter;
 use Makhnanov\PhpMarusia\Request\RequestProperty\Nlu;
-use stdClass;
+use Makhnanov\PhpSelfFilling\SelfFilling;
 
 /**
  * @description Данные, полученные от пользователя
@@ -17,9 +15,9 @@ use stdClass;
  * @method null|string getPayload()
  * @method Nlu getNlu()
  */
-class RequestProperty
+final class RequestProperty
 {
-    use ProbablyBadRequest, Getter;
+    use SelfFilling;
 
     /**
      * @description Пользовательский текст, очищенный от не влияющих на смысл преложения слов.
@@ -30,12 +28,12 @@ class RequestProperty
      *
      * @see Request::isEnd()
      */
-    protected string $command;
+    public readonly string $command;
 
     /**
      * @description Полный текст пользовательского запроса, максимум 1024 символа.
      */
-    protected string $originalUtterance;
+    public readonly string $originalUtterance;
 
     /**
      * @description Тип ввода, обязательное свойство.
@@ -43,30 +41,27 @@ class RequestProperty
      * "SimpleUtterance" — голосовой ввод,
      * "ButtonPressed" — нажатие кнопки.
      */
-    protected string $type;
+    public readonly string $type;
 
     /**
      * @description JSON, полученный с нажатой кнопкой от обработчика скилла (в ответе на предыдущий запрос),
      * максимум 4096 байт. Передаётся, только если была нажата кнопка с payload.
      */
-    protected ?string $payload;
+    public readonly ?string $payload;
 
     /**
      * @description Объект, содержащий слова и именованные сущности,
      * которые Маруся извлекла из запроса пользователя, в поле tokens (array) .
      * ToDo: проверить наличие этого свойства при нажатии кнопки
      */
-    protected Nlu $nlu;
+    public readonly Nlu $nlu;
 
     /**
      * @throws BadRequest
      */
-    public function __construct(stdClass $data)
+    public function __construct(array $data)
     {
-        $this->command = $data->command ?? $this->throwException('command');
-        $this->originalUtterance = $data->original_utterance ?? $this->throwException('original_utterance');
-        $this->type = $data->type ?? $this->throwException('type');
-        $this->payload = $data->payload ?? null;
-        $this->nlu = new Nlu($data->nlu ?? $this->throwException('nlu'));
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->selfFill($data, fromDataIdToPropertyCamel: true);
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Makhnanov\PhpMarusia\Exception\BadResponse;
 use Makhnanov\PhpMarusia\Exception\InvalidAuthId;
 use Makhnanov\PhpMarusia\Request;
-use Makhnanov\PhpMarusia\Response;
 use Makhnanov\PhpMarusia\Tools;
 use Makhnanov\PhpMarusia\Exception\BadRequest;
 
@@ -14,15 +13,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 try {
     Tools::setResponseHeaderAllowCors();
 
-    $request = Request::handle(
-        Tools::receiveData() ?: throw new BadRequest('Data is empty.'),
-        null,
-        false
-    );
+    $request = Request::handle(null);
 
-    Response::create()
-        ->setRequest($request)
-        ->setText('Маруся передаёт привет.')
+    $request->response()
+        ->setText($request->request->command)
         ->say();
 
 } catch (BadRequest) {

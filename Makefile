@@ -1,4 +1,7 @@
-up-all:
-	docker-compose build && docker-compose up -d
+DOCKER_COMPOSE = docker compose
+run-build:
+	$(DOCKER_COMPOSE) build
+run-up:
+	$(DOCKER_COMPOSE) up -d
 run-shell:
-	docker-compose run marusia-workspace bash
+	$(DOCKER_COMPOSE) run marusia-workspace bash

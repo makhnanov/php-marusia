@@ -4,7 +4,7 @@ namespace Makhnanov\PhpMarusia\Exception;
 
 use Exception;
 
-class BadRequest extends Exception
+final class BadRequest extends Exception
 {
 
 }

@@ -67,7 +67,7 @@ class Response
     private function getUserId(): string
     {
         return $this->userId
-            ?: $this->request?->getSession()->getApplication()->getApplicationId()
+            ?: $this->request?->session->application->applicationId
                 ?: throw new BadResponse('Need fill session.user_id');
     }
 
@@ -83,7 +83,7 @@ class Response
     private function getSessionId(): string
     {
         return $this->sessionId
-            ?: $this->request?->getSession()->getSessionId()
+            ?: $this->request?->session->sessionId
                 ?: throw new BadResponse('sessionId is not set');
     }
 
@@ -99,7 +99,7 @@ class Response
     private function getMessageId(): int
     {
         return $this->messageId
-            ?: $this->request?->getSession()->getMessageId()
+            ?: $this->request?->session->messageId
                 ?: throw new BadResponse('messageId is no set');
     }
 
@@ -109,7 +109,7 @@ class Response
     private function getVersion(): string
     {
         return $this->version
-            ?: $this->request?->getVersion()
+            ?: $this->request?->version
                 ?: throw new BadResponse('version in not set');
     }
 

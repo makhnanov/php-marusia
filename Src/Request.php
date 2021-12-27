@@ -6,80 +6,71 @@ namespace Makhnanov\PhpMarusia;
 
 use Makhnanov\PhpMarusia\Exception\BadRequest;
 use Makhnanov\PhpMarusia\Exception\InvalidAuthId;
-use Makhnanov\PhpMarusia\Exception\ProbablyBadRequest;
 use Makhnanov\PhpMarusia\Request\Meta;
 use Makhnanov\PhpMarusia\Request\RequestProperty;
 use Makhnanov\PhpMarusia\Request\Session;
-use TypeError;
+use Makhnanov\PhpSelfFilling\SelfFilling;
+use Throwable;
 
 /**
  * Официальную документацию можно найти по адресу
  * @url https://vk.com/dev/marusia_skill_docs8
- *
- * @method Meta getMeta()
- * @method RequestProperty getRequest()
- * @method Session getSession()
- * @method string getVersion()
  */
 class Request
 {
-    use ProbablyBadRequest, Getter;
+    use SelfFilling;
 
     /**
      * @description Информация об устройстве, с помощью которого пользователь общается с Марусей
      */
-    protected Meta $meta;
+    public readonly Meta $meta;
 
     /**
      * @description Данные, полученные от пользователя
      */
-    protected RequestProperty $request;
+    public readonly RequestProperty $request;
 
     /**
      * @description Данные о сессии
      */
-    protected Session $session;
+    public readonly Session $session;
 
     /**
      * @description Версия протокола, текущая версия — 1.0.
      */
-    protected string $version;
+    public readonly string $version;
 
     /**
+     * Принятие и обработка запроса от сервера маруси
+     *
      * @throws BadRequest
      * @throws InvalidAuthId
      */
-    public static function handle(string $data, null|string $authToken = null, bool $validateAuthToken = true)
+    public static function handle(null|string $authToken): self
     {
-        return new self(...func_get_args());
+        return new self(
+            Tools::receiveData() ?: throw new BadRequest('Data is empty.'),
+            $authToken
+        );
     }
 
     /**
      * @throws BadRequest
      * @throws InvalidAuthId
      */
-    protected function __construct(string $data, null|string $authToken = null, bool $validateAuthToken = true)
+    protected function __construct(string $data, null|string $authToken)
     {
         try {
-            $dataObject = json_decode($data);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new BadRequest(__CLASS__ . ' received bad json. Json error: ' . json_last_error_msg());
-            }
-            $this->meta = new Meta($dataObject->meta ?? $this->throwException('meta'));
-            $this->request = new RequestProperty($dataObject->request ?? $this->throwException('request'));
-            $this->session = new Session($dataObject->session ?? $this->throwException('session'));
-            /** @noinspection PhpStrictTypeCheckingInspection */
-            $this->version = $dataObject->version ?? $this->throwException('version');
-
-        } catch (TypeError $e) {
+            $this->selfFill($data);
+        } catch (Throwable $e) {
             throw new BadRequest('Wrong type.', previous: $e);
         }
 
-        if (!$validateAuthToken) {
+        if (is_null($authToken)) {
             return;
         }
 
-        $receivedAuthToken = $this->session->getAuthToken();
+        $receivedAuthToken = $this->session->authToken;
         if ($receivedAuthToken !== $authToken) {
             throw new InvalidAuthId("Auth token \"$receivedAuthToken\" invalid");
         }
@@ -87,21 +78,26 @@ class Request
 
     public function isVoice(): bool
     {
-        return $this->request->getType() === 'SimpleUtterance';
+        return $this->request->type === 'SimpleUtterance';
     }
 
     public function isButton(): bool
     {
-        return $this->request->getType() === 'ButtonPressed';
+        return $this->request->type === 'ButtonPressed';
     }
 
     public function isStart(): bool
     {
-        return $this->session->getNew() === true;
+        return $this->session->new === true;
     }
 
     public function isEnd(): bool
     {
-        return $this->request->getCommand() === 'on_interrupt';
+        return $this->request->command === 'on_interrupt';
+    }
+
+    public function response(): Response
+    {
+        return Response::create()->setRequest($this);
     }
 }

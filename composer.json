@@ -11,7 +11,8 @@
     "minimum-stability": "dev",
     "require": {
         "psr/log": "3.x-dev",
-        "monolog/monolog": "2.x-dev"
+        "monolog/monolog": "2.x-dev",
+        "makhnanov/php-self-filling": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
