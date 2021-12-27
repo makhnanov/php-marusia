@@ -7,10 +7,8 @@ namespace Makhnanov\PhpMarusia\Request;
 use Makhnanov\PhpMarusia\Request;
 use Makhnanov\PhpMarusia\Request\Session\Application;
 use Makhnanov\PhpMarusia\Request\Session\User;
-use Makhnanov\PhpSelfFilling\SelfFillable;
 use Makhnanov\PhpSelfFilling\SelfFillableConstruct;
 use Makhnanov\PhpSelfFilling\SelfFilling;
-use stdClass;
 
 /**
  * @description Данные о сессии.
@@ -68,7 +66,7 @@ final class Session implements SelfFillableConstruct
      */
     public readonly string $authToken;
 
-    public function __construct(stdClass $data)
+    public function __construct(array $data)
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $this->selfFill($data, fromDataIdToPropertyCamel: true);
