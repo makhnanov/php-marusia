@@ -100,7 +100,7 @@ class Response
     {
         return $this->messageId
             ?: $this->request?->session->messageId
-                ?: throw new BadResponse('messageId is no set');
+                ?? throw new BadResponse('messageId is not set');
     }
 
     /**
